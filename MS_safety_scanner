@@ -1,0 +1,10 @@
+"$date = get-date -format ""yyyyMMdd""
+$date
+
+Invoke-WebRequest -uri ""https://go.microsoft.com/fwlink/?LinkId=212732"" -OutFile c:\users\michael\Downloads\msert$date.exe"
+"<#
+ # MSFT Safety Scanner - 10 days
+#>
+Invoke-WebRequest  -uri ""https://go.microsoft.com/fwlink/?LinkID=212732"" -OutFile c:\users\mteoh\Downloads\MSFT_safety_scanner.exe"
+Microsoft Safety Scanner Download - Windows security | Microsoft Docs
+https://docs.microsoft.com/en-us/windows/security/threat-protection/intelligence/safety-scanner-download
