@@ -1,0 +1,88 @@
+<html>
+<head>
+</head>
+<body>
+<a href="https://www.digitalocean.com/community/tutorials/an-introduction-to-selinux-on-centos-7-part-1-basic-concepts">An Introduction to SELinux on CentOS 7 – Part 1: Basic Concepts (MUST)</a><br>
+1. Install<br>
+yum install policycoreutils policycoreutils-python selinux-policy selinux-policy-targeted libselinux-utils setroubleshoot-server setools setools-console mcstrans<br>
+2. Status<br>
+getenforce<br>   
+# sestatus command shows the policy store name<br>
+sestatus<br>
+cat /etc/selinux/config<br>
+<br>
+SELINUX=enforcing|permissive|disabled<br>
+SELINUXTYPE=targeted|minimum|mls<br>
+<br>
+From RHEL7 doc, "SELinux can be either in the enabled or disabled state. When disabled, only DAC rules are used. When in an enabled state, SELinux can run in one of the following modes-enforcing or permissive mode".<br><br>
+3. Configuration<br>
+setenforce permissive<br>
+<br>
+An SELinux policy defines user access to roles, role access to domains, and domain access to types.<br>
+From RHEL7 doc, "SELinux access decisions are based on all available information, such as an SELinux user, role, type, and, optionally, a level."
+In the SELinux world, a process (a daemon or a running program) is called a subject.<br>
+<br>
+Roles<br>
+=====<br>
+A role is like a gateway that sits between a user and a process. A role defines which users can access that process. Roles are not like groups, but more like <br>
+filters: a user may enter or assume a role at any time provided the role grants it. The definition of a role in SELinux policy defines which users have access <br>
+to that role. It also defines what process domains the role itself has access to. Roles come into play because part of SELinux implements what's known as <br>
+Role Based Access Control (RBAC).<br>
+<br>
+Subjects and Objects<br>
+====================<br>
+A subject is a process and can potentially affect an object.<br>
+An object in SELinux is anything that can be acted upon. This can be a file, a directory, a port, a tcp socket, the cursor, or perhaps an X server. <br>
+The actions that a subject can perform on an object are the subject's permissions.<br>
+<br>
+Domains are for Subjects<br>
+A domain is the context within which an SELinux subject (process) can run. That context is like a wrapper around the subject. It tells the process what it can and <br>
+can't do. For example, the domain will define what files, directories, links, devices, or ports are accessible to the subject.<br>
+<br>
+Types are for Objects<br>
+=====================<br>
+A type is the context for a file's context that stipulates the file's purpose. For example, the context of a file may dictate that it's a web page, or that the <br>
+file belongs to the /etc directory, or that the file's owner is a specific SELinux user. A file's context is called its type in SELinux lingo.<br>
+<br>
+So what is SELinux policy?<br>
+<br>
+SELinux policy defines user access to roles, role access to domains, and domain access to types. First the user has to be authorized to enter a role, and then <br>
+the role has to be authorized to access the domain. The domain in turn is restricted to access only certain types of files.<br>
+<br>
+The policy itself is a bunch of rules that say that so-and-so users can assume only so-and-so roles, and those roles will be authorized to access only <br>
+so-and-so domains. The domains in turn can access only so-and-so file types. The following image shows the concept:<br>
+<br>
+Terminology tip: The last bit, where a process running within a particular domain can perform only certain operations on certain types of objects, is <br>
+called Type Enforcement (TE).<br>
+<br>
+semodule -l | less  # lists the SELinux policy modules currently loaded into memory.<br>
+<br>
+The policy files have a .pp extension. <br>
+ <br>
+ls -l /etc/selinux/targeted/modules/active/modules/<br>
+ls -l /etc/selinux/targeted/policy/               #  show the active policy<br>
+ <br>
+Changing SELinux Boolean Settings<br>
+semanage boolean -l | less      # check settings first, yum -y install policycoreutils-python as I cannot execute semanage<br>
+                                # https://www.cyberciti.biz/faq/redhat-install-semanage-selinux-command-rpm/<br>
+<br>
+getsebool ftpd_anon_write     # ftpd_anon_write --> off<br>
+setsebool ftpd_anon_write on  # ftpd_anon_write --> on<br>
+<br>
+Changed booleans are not permanent. They revert to their old values after a reboot. To make things permanent, we can use the -P switch with the setsebool command.<br>
+<br>
+https://www.digitalocean.com/community/tutorials/an-introduction-to-selinux-on-centos-7-part-2-files-and-processes<br>
+<br>
+https://www.digitalocean.com/community/tutorials/an-introduction-to-selinux-on-centos-7-part-3-users<br>
+http://www.drupalwatchdog.com/volume-2/issue-2/using-apache-and-selinux-together<br>
+http://www.terminalinflection.com/relocating-apache-selinux/<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+</body>
+</html>
+
