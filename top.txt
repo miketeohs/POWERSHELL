@@ -1,0 +1,25 @@
+https://superuser.com/questions/176624/linux-top-command-for-windows-powershell
+
+in powershell execute the following:
+# used & remaining memory left missing
+While(1) {ps | sort -des cpu | select -f 15 | ft -a; sleep 10; cls}
+
+While(1) {  $p = get-counter '\Process(*)\% Processor Time'; cls; $p.CounterSamples | sort -des CookedValue | select -f 15 | ft -a}
+
+using powershell how much memory?
+
+Get-Counter '\Memory\Available MBytes'
+while (1) { Get-Counter '\Memory\Available MBytes'; sleep 10 }
+
+Get-Counter '\Processor(_Total)\% Processor Time'
+
+To get a list of memory counters:
+
+Get-Counter -ListSet *memory* | Select-Object -ExpandProperty  Counter
+
+(Get-Counter '\Processor(_Total)\% Processor Time').CounterSamples.CookedValue and (Get-Counter '\Memory\Available MBytes').CounterSamples.CookedValue
+
+Get multi counter at one to save time $a = (Get-Counter "\Processor Information(_Total)\% Processor Performance", '\Memory\Available MBytes').CounterSamples.CookedValue, get it $a[1] –
+KevinBui
+
+Get-WmiObject Win32_Processor | Select LoadPercentage | Format-List
