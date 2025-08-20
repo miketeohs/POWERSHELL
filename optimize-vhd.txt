@@ -1,0 +1,8 @@
+1. get-childitem -path hkcu:software\microsoft\windows\currentversion\lxss\
+2. wsl -t Ubuntu-24.04
+3. cd C:\Users\michael\AppData\Local\Packages\CanonicalGroupLimited.Ubuntu24.04LTS_79rhkp1fndgsc\LocalState
+4. dir ext4.vhdx
+5. optimize-VHD -path .\ext4.vhdx -Mode Full
+6. dir ext4.vhdx
+7. wsl -d Ubuntu-24.04
+
