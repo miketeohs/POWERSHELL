@@ -1,0 +1,9 @@
+(Get-WindowsOptionalFeature -online -FeatureName  *).featurename
+
+rem https://learn.microsoft.com/en-us/windows-server/virtualization/hyper-v/get-started/Install-Hyper-V?tabs=powershell&pivots=windows#enable-hyper-v-using-powershell
+
+Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V -All
+
+To enable the Hyper-V role on Windows using DISM:
+DISM /Online /Enable-Feature /All /FeatureName:Microsoft-Hyper-V
+
