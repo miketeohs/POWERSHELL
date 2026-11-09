@@ -23,3 +23,6 @@ Get multi counter at one to save time $a = (Get-Counter "\Processor Information(
 KevinBui
 
 Get-WmiObject Win32_Processor | Select LoadPercentage | Format-List
+
+
+Testing
