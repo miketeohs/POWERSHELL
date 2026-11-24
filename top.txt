@@ -22,5 +22,6 @@ Get-Counter -ListSet *memory* | Select-Object -ExpandProperty  Counter
 Get multi counter at one to save time $a = (Get-Counter "\Processor Information(_Total)\% Processor Performance", '\Memory\Available MBytes').CounterSamples.CookedValue, get it $a[1] –
 KevinBui
 
+Obsolete
 Get-WmiObject Win32_Processor | Select LoadPercentage | Format-List
 
